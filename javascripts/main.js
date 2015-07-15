@@ -22,6 +22,11 @@ app.init = function () {
   app.renderer = Detector.webgl ? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
   app.renderer.setSize(app.width, app.height);
 
+
+  app.controls = new THREE.OrbitControls( app.camera );
+  app.controls.damping = 0.2;
+  app.controls.addEventListener( 'change', onMouseDrugAndDrop );
+
   document.body.appendChild(app.renderer.domElement);
 
   app.addSphere();
@@ -55,7 +60,11 @@ app.animate = function () {
 window.onload = app.init;
 
 
-//on mouse wheel move/touchpad view is zooming in/out
+onMouseDrugAndDrop = function() {
+  app.renderer.render( app.scene, app.camera );
+  app.sphere.update();
+};
+
 onMouseWheel = function(event) {
 
   if (event.wheelDeltaY) {                      // WebKit
