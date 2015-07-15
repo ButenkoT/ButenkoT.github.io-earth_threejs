@@ -7,7 +7,6 @@ app.init = function () {
 
 
   app.scene = new THREE.Scene();
-  //app.scene.add(app.camera);
   app.scene.add(new THREE.AmbientLight(0x333333));
   app.light = new THREE.DirectionalLight(0xffffff, 1);
   app.light.position.set(5,3,5);
@@ -22,7 +21,6 @@ app.init = function () {
   //checks if webgl is not supported replaces it with canvas
   app.renderer = Detector.webgl ? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
   app.renderer.setSize(app.width, app.height);
-  //app.renderer.setClearColor(0xE3F2FD, 1);
 
   document.body.appendChild(app.renderer.domElement);
 
@@ -35,7 +33,8 @@ app.addSphere = function () {
 
   var shape = new THREE.SphereGeometry(90, 32, 32);
   var material = new THREE.MeshPhongMaterial({
-    map: THREE.ImageUtils.loadTexture('images/earth.jpg')
+    map: THREE.ImageUtils.loadTexture('images/earth.jpg'),
+    bumpMap: THREE.ImageUtils.loadTexture('images/bump_map.jpg')
   });
 
   app.sphere = new THREE.Mesh(shape, material);
@@ -50,7 +49,6 @@ app.animate = function () {
 
   app.sphere.rotation.y += 0.001;
 
-  //a combining step
   app.renderer.render(app.scene, app.camera);
 };
 
